@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Data Virtualization</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/customized.css" rel="stylesheet">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script src="js/csv2array.js"></script>
+    <script src="js/initialize.js"></script>
+
+</head>
+
+<body>
+    <div class="dim">
+        <p>Data Loading...</p>
+    </div>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        UBC Happniess Map
+                    </a>
+                </li>
+                <li>
+                    <a type="button" class="" data-toggle="modal" data-target="#aboutModal">
+                      About
+                    </a>
+                </li>
+                <li>
+                    <a href="data/happiness_data.txt" download>
+                        Download Sample Dataset
+                    </a>
+                </li>
+                <li><span class="hint">Campus:</span></li>
+                <li>
+                    <select id="select_campus">
+                        <option value="Vancouver">Vancouver</option>
+                        <option value="Okanagan">Okanagan</option>
+                    </select>
+                </li>
+                <li><span class="hint">Question of Interests:</span></li>
+                <li>
+                    <select id="select_column">
+                        <option value="1">How happy are you feeling at this moment?</option>
+                        <option value="2">How stressed are you feeling at this moment?</option>
+                        <option value="3">How energetic are you feeling at this moment?</option>
+                        <option value="4">How anxious are you feeling at this moment?</option>
+                        <option value="5">How relaxed are you feeling at this moment?</option>
+                        <option value="6">How upset are you feeling at this moment?</option>
+                        <option value="7">How tired are you feeling at this moment?</option>
+                        <option value="8">How confident are you feeling at this moment?</option>
+                        <option value="9">How beautiful is your current environment?</option>
+                        <option value="10">How clean is your current environment?</option>
+                        <option value="11">How quiet is your current environment?</option>
+                        <option value="12">How spacious is your current environment?</option>
+                        <option value="13">How hot is your current environment?</option>
+                        <option value="14">How safe is your current environment?</option>
+                        <option value="15">How comfortable is your current environment?</option>
+                        <option value="16">How healthy are you feeling these days?</option>
+                        <option value="17">How satisfied are you with your life these days?</option>
+                    </select>
+                </li>
+                <li><span class="hint">Type of Interests:</span></li>
+                <li>
+                    <select id="select_type">
+                        <option value="Mean">Mean</option>
+                        <option value="Variance">Variance</option>
+                    </select>
+                </li>
+                <li><span class="hint">Select Data File:</span></li>
+                <li>
+                    <div style="padding-left: 20px;"><input type="file" id="fileInput"></div>
+                </li>
+                <li>
+                    <a href="javascript:window.location.href=window.location.href" id="restart">Restart</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        
+        <div id="page-content-wrapper">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        
+                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
+                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                        </a><h1>Happiness Map</h1>
+                        <div id="map-canvas"></div>
+        
+                   </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">About this Project</h4>
+          </div>
+          <div class="modal-body">
+            <p>This project is about the data virtualization of UBC Happiness. </p>
+            <p>This demo is a illustration of psychological health data collected from UBC Vancouver and Okanagan Campus. </p>
+            <p>As a preliminary research, the data process is conducted by front-end JavaScript, which is actually running on your own browser. To this end, the speed of processing is a bit slow after you select the data set. </p>
+            <p>Please be patient.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>Loading... Please be patient...</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+
+
+</body>
+
+</html>
